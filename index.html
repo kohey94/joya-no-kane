@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web除夜の鐘</title>
+    <style>
+      body {
+        background-color: #1a1a1a;
+        color: #fff;
+        font-family: monospace;
+        text-align: center;
+        padding: 20px;
+        font-size: 16px;
+        touch-action: manipulation;
+        user-select: none;
+        
+        /* 画面の高さ全体を使ってフッターを下部に寄せる設定 */
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-sizing: border-box; /* パディングを含めて高さを計算 */
+      }
+      
+      h1 { margin-bottom: 20px; font-size: 1.5rem; }
+      
+      .value-box {
+        background: #333;
+        margin: 10px auto;
+        padding: 15px;
+        border-radius: 8px;
+        text-align: left;
+        max-width: 400px;
+        width: 100%; /* 幅を固定 */
+        box-sizing: border-box;
+      }
+      .label { color: #aaa; font-size: 0.8rem; }
+      .value { font-size: 1.2rem; font-weight: bold; color: #4af; }
+      
+      #status-display {
+        font-size: 1.2rem;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 10px;
+        padding: 5px;
+        border-radius: 4px;
+        background: #222;
+      }
+
+      #start-btn {
+        background: #d64a28;
+        color: white;
+        border: none;
+        padding: 15px 40px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        border-radius: 50px;
+        cursor: pointer;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      }
+      #start-btn:active { transform: scale(0.95); }
+
+      /* --- フッターのスタイル --- */
+      footer {
+        margin-top: auto; /* 自動で一番下に押し下げる */
+        padding-top: 40px; /* 上との余白 */
+        font-size: 0.75rem;
+        color: #666;
+      }
+      footer a {
+        color: #888;
+        text-decoration: none;
+        border-bottom: 1px dotted #888;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>📿 Web除夜の鐘 📿</h1>
+    
+    <button id="start-btn">参拝する（起動）</button>
+
+    <div class="value-box">
+      <div class="label">撞木(スマホ)の角度</div>
+      <div>Gamma(左右): <span id="rot-g" class="value">0</span>°</div>
+      <div id="status-display" style="color: #888;">待機中...</div>
+    </div>
+
+    <div class="value-box">
+      <div class="label">突く強さ (加速度)</div>
+      <div>合成値: <span id="acc-total" class="value" style="color: #f77;">0.0</span></div>
+    </div>
+
+    <p style="font-size: 0.9rem; color: #aaa; margin-top: 30px; line-height: 1.6;">
+      <strong>【遊び方】</strong><br>
+      ① スマホを横向きにする<br>
+      ② 親指で<span style="color: #4af; font-weight:bold;">画面を押し続ける</span><br>
+      ③ そのまま鐘を突くように振る！
+    </p>
+
+    <footer>
+      Sound Effect by <a href="https://otologic.jp" target="_blank">OtoLogic</a> (CC BY 4.0)
+    </footer>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
