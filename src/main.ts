@@ -10,10 +10,7 @@ let audioCtx: AudioContext;
 let bellBuffer: AudioBuffer | null = null;
 let isTouching = false; // タッチ中フラグ
 
-// --- iOS用型定義ハック ---
-interface DeviceOrientationEventiOS extends DeviceOrientationEvent {
-  requestPermission?: () => Promise<'granted' | 'denied'>;
-}
+// --- iOS用 ---
 interface DeviceMotionEventiOS extends DeviceMotionEvent {
   requestPermission?: () => Promise<'granted' | 'denied'>;
 }
@@ -27,7 +24,7 @@ startBtn.addEventListener('click', async () => {
     const response = await fetch('/bell.mp3');
     const arrayBuffer = await response.arrayBuffer();
     bellBuffer = await audioCtx.decodeAudioData(arrayBuffer);
-    console.log("🔔 音源ロード完了");
+    console.log("音源ロード完了");
   } catch (e) {
     alert("音源エラー: " + e);
     return;
@@ -40,7 +37,7 @@ startBtn.addEventListener('click', async () => {
       if (permission === 'granted') {
         startSensors();
       } else {
-        alert('センサーの使用が拒否されました🥲');
+        alert('センサーの使用が拒否されました');
       }
     } catch (e) {
       alert('権限リクエストエラー: ' + e);
@@ -56,8 +53,7 @@ function startSensors() {
   statusDisplay.innerText = "画面を親指で押し続けて！";
 
   // --- タッチイベント ---
-  const onTouchStart = (e: Event) => {
-    // e.preventDefault(); // 必要ならコメントアウト解除
+  const onTouchStart = () => {
     isTouching = true;
     body.style.backgroundColor = "#2d2d2d";
     statusDisplay.innerText = "🟢 構えOK！振れ！";
@@ -98,7 +94,7 @@ function startSensors() {
     
     if (accTotal) accTotal.innerText = totalSpeed.toFixed(1);
 
-    // --- 🔔 判定ロジック ---
+    // --- 判定ロジック ---
     // 強弱計算は不要なので、閾値(20)を超えたら「鳴らす」だけ
     if (isTouching && totalSpeed > 20 && Math.abs(currentGamma) > 60) {
       const now = Date.now();
